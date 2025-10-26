@@ -1,0 +1,16 @@
+[
+{
+  "modid": "pixelgreenhouse",
+  "name": "PixelGreenhouse",
+  "description": "A side mod for Pixelmon that adds a greenhouse block for growing Apricorns automatically.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["PolkaX"],
+  "credits": "Thanks to the Pixelmon team for creating an amazing mod!",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": ["pixelmon"]
+}
+]

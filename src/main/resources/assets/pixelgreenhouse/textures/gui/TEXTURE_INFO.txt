@@ -1,0 +1,21 @@
+GUI Texture Information
+=======================
+
+Required texture: greenhouse.png
+Location: src/main/resources/assets/pixelgreenhouse/textures/gui/greenhouse.png
+Size: 256x256 pixels
+
+Layout:
+- Main GUI background: 176x166 pixels (top-left corner)
+- Fuel burn indicator: 14x14 pixels at position (176, 0)
+- Growth progress arrow: 24x16 pixels at position (176, 14)
+
+Slot positions:
+- Input slots (left): 6 slots in 3x2 grid starting at (26, 17)
+- Fuel slot (center): 1 slot at (80, 53)
+- Output slots (right): 6 slots in 3x2 grid starting at (116, 17)
+- Player inventory: Standard 9x3 grid starting at (8, 84)
+- Player hotbar: Standard 9 slots starting at (8, 142)
+
+You can use the vanilla furnace GUI as a reference and modify it to match this layout.
+The GUI should have a similar style to Minecraft's vanilla GUIs.
