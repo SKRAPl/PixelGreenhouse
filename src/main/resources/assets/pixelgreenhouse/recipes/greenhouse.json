@@ -2,16 +2,23 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "GGG",
-    "G G",
-    "III"
+    "AWA",
+    "IBI"
   ],
   "key": {
-    "G": {
-      "item": "minecraft:glass"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    }
+    "G": { "item": "minecraft:glass" },
+    "W": { "item": "pixelmon:wailmer_pail" },
+    "A": [
+      { "item": "pixelmon:black_apricorn" },
+      { "item": "pixelmon:blue_apricorn" },
+      { "item": "pixelmon:green_apricorn" },
+      { "item": "pixelmon:pink_apricorn" },
+      { "item": "pixelmon:red_apricorn" },
+      { "item": "pixelmon:white_apricorn" },
+      { "item": "pixelmon:yellow_apricorn" }
+    ],
+    "I": { "item": "minecraft:iron_block" },
+    "B": { "item": "pixelmon:aluminium_block" }
   },
   "result": {
     "item": "pixelgreenhouse:greenhouse",

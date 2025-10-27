@@ -20,13 +20,9 @@
 
 ## Крафт
 Рецепт (форменный):
-```
-GGG
-G G
-III
-```
-- `G` — стекло
-- `I` — железный слиток
+
+![Теплица Апрекорнов](src/main/resources/assets/pixelgreenhouse/recipes/recipe.png)
+
 - Результат: `pixelgreenhouse:greenhouse`
 
 ## Как использовать

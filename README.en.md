@@ -20,13 +20,9 @@ A Forge mod for Minecraft 1.12.2 that adds a functional Greenhouse block for gro
 
 ## Crafting
 Recipe (shaped):
-```
-GGG
-G G
-III
-```
-- `G` = glass
-- `I` = iron ingot
+
+![Greenhouse Recipe](src/main/resources/assets/pixelgreenhouse/recipes/recipe.png)
+
 - Result: `pixelgreenhouse:greenhouse`
 
 ## How to use
