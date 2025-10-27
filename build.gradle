@@ -13,9 +13,11 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.0.0'
+def mc_version = '1.12.2'
+def mod_version = '1.0.0'
+version = "${mc_version}-${mod_version}"
 group = 'com.polkax.pixelgreenhouse'
-archivesBaseName = 'pixelgreenhouse'
+archivesBaseName = 'PixelGreenhouse'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
