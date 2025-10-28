@@ -14,12 +14,21 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 def mc_version = '1.12.2'
-def mod_version = '1.0.1'
+def mod_version = '1.0.2'
 version = "${mc_version}-${mod_version}"
 group = 'com.polkax.pixelgreenhouse'
 archivesBaseName = 'PixelGreenhouse'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+
+// Ensure UTF-8 encoding to avoid unmappable character errors on Windows
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Javadoc) {
+    options.encoding = 'UTF-8'
+}
 
 minecraft {
     // The mappings can be changed at any time, and must be in the following format.

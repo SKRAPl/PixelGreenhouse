@@ -2,11 +2,14 @@ package com.polkax.pixelgreenhouse.tileentity;
 
 import com.pixelmonmod.pixelmon.items.ItemApricorn;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.ITickable;
@@ -29,6 +32,8 @@ public class TileEntityGreenhouse extends TileEntity implements ITickable, IInve
     private int currentItemBurnTime;
     private int growthProgress;
     private static final int GROWTH_TIME = 1200; // 1 minute (1200 ticks = 60 seconds)
+    private int syncTicker = 0;
+    private static final int SYNC_INTERVAL = 5; // каждые 5 тиков (~0.25s)
     
     @Override
     public void update() {
@@ -69,18 +74,31 @@ public class TileEntityGreenhouse extends TileEntity implements ITickable, IInve
                 if (this.growthProgress >= GROWTH_TIME) {
                     this.growthProgress = 0;
                     this.growApricorns();
+                    sendUpdate();
                 }
             } else if (!this.canGrow()) {
                 // Сбрасываем прогресс только если нет предметов для роста
                 if (this.growthProgress != 0) {
                     this.growthProgress = 0;
                     dirty = true;
+                    sendUpdate();
                 }
             }
             // Если просто нет топлива, но есть предметы - прогресс сохраняется
             
             if (wasBurning != this.isBurning()) {
                 dirty = true;
+            }
+            
+            // Периодическая синхронизация для TESR
+            if (this.isBurning() && this.canGrow()) {
+                syncTicker++;
+                if (syncTicker >= SYNC_INTERVAL) {
+                    sendUpdate();
+                    syncTicker = 0;
+                }
+            } else {
+                syncTicker = 0;
             }
             
             if (dirty) {
@@ -136,6 +154,14 @@ public class TileEntityGreenhouse extends TileEntity implements ITickable, IInve
     public boolean isUsableByPlayer(EntityPlayer player) {
         return this.world.getTileEntity(this.pos) == this && 
                player.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
+    }
+    
+    public int getGrowthProgress() {
+        return this.growthProgress;
+    }
+    
+    public int getGrowthTime() {
+        return GROWTH_TIME;
     }
     
     @Override
@@ -230,6 +256,9 @@ public class TileEntityGreenhouse extends TileEntity implements ITickable, IInve
         if (index < 6 && !flag) {
             this.growthProgress = 0;
             this.markDirty();
+            if (!world.isRemote) {
+                sendUpdate();
+            }
         }
     }
     
@@ -324,5 +353,34 @@ public class TileEntityGreenhouse extends TileEntity implements ITickable, IInve
             return index >= 7 && index < 13; // Только из выходных слотов можно извлекать снизу
         }
         return false;
+    }
+
+    private void sendUpdate() {
+        if (world == null) return;
+        IBlockState state = world.getBlockState(pos);
+        world.notifyBlockUpdate(pos, state, state, 3);
+        markDirty();
+    }
+
+    @Override
+    public NBTTagCompound getUpdateTag() {
+        return this.writeToNBT(new NBTTagCompound());
+    }
+
+    @Override
+    public void handleUpdateTag(NBTTagCompound tag) {
+        this.readFromNBT(tag);
+    }
+
+    @Override
+    public SPacketUpdateTileEntity getUpdatePacket() {
+        NBTTagCompound nbt = new NBTTagCompound();
+        this.writeToNBT(nbt);
+        return new SPacketUpdateTileEntity(this.pos, 1, nbt);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+        this.readFromNBT(pkt.getNbtCompound());
     }
 }
