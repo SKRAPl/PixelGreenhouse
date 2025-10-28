@@ -14,7 +14,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 def mc_version = '1.12.2'
-def mod_version = '1.0.0'
+def mod_version = '1.0.1'
 version = "${mc_version}-${mod_version}"
 group = 'com.polkax.pixelgreenhouse'
 archivesBaseName = 'PixelGreenhouse'
