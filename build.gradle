@@ -14,7 +14,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 def mc_version = '1.12.2'
-def mod_version = '1.0.2'
+def mod_version = '1.0.3'
 version = "${mc_version}-${mod_version}"
 group = 'com.polkax.pixelgreenhouse'
 archivesBaseName = 'PixelGreenhouse'
@@ -66,6 +66,15 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
         }
+    }
+}
+
+// Expand version tokens in mcmod.info for the Mod List
+processResources {
+    inputs.property "version", mod_version
+    inputs.property "mcversion", mc_version
+    filesMatching('mcmod.info') {
+        expand 'version': mod_version, 'mcversion': mc_version
     }
 }
 
