@@ -11,6 +11,6 @@
   "credits": "Thanks to the Pixelmon team for creating an amazing mod!",
   "logoFile": "",
   "screenshots": [],
-  "dependencies": ["required-after:pixelmon@[8.4.3,8.4.3]"]
+  "dependencies": ["required-after:pixelmon@[8.4.3,8.4.4)"]
 }
 ]
