@@ -13,11 +13,22 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.0.0'
+def mc_version = '1.12.2'
+def mod_version = '1.0.3'
+version = "${mc_version}-${mod_version}"
 group = 'com.polkax.pixelgreenhouse'
-archivesBaseName = 'pixelgreenhouse'
+archivesBaseName = 'PixelGreenhouse'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+
+// Ensure UTF-8 encoding to avoid unmappable character errors on Windows
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Javadoc) {
+    options.encoding = 'UTF-8'
+}
 
 minecraft {
     // The mappings can be changed at any time, and must be in the following format.
@@ -55,6 +66,15 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
         }
+    }
+}
+
+// Expand version tokens in mcmod.info for the Mod List
+processResources {
+    inputs.property "version", mod_version
+    inputs.property "mcversion", mc_version
+    filesMatching('mcmod.info') {
+        expand 'version': mod_version, 'mcversion': mc_version
     }
 }
 

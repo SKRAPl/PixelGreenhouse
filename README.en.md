@@ -4,9 +4,9 @@ A Forge mod for Minecraft 1.12.2 that adds a functional Greenhouse block for gro
 
 ## Requirements
 - Minecraft: 1.12.2
-- Forge: 14.23.5.2860 (as used in this repo)
-- Pixelmon Reforged: 8.4.3 (the build uses a local JAR in `libs/`)
-- Java 8 (JDK 8)
+- Forge: 14.23.5.2860
+- Pixelmon Reforged: 8.4.3 
+- Java 8
 
 ## Features
 - **Greenhouse block** with GUI and internal inventory.
